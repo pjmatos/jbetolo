@@ -582,7 +582,7 @@ class plgSystemJBetolo extends JPlugin {
                                 if ($merge) {
                                         $shouldIgnore = jbetoloFileHelper::isFileExcluded($src, $excluded);
                                 } else {
-                                        $shouldIgnore = true;
+                                        $shouldIgnore = type == 'css' || self::param('js_placement') == 1;
                                 }
 
                                 if ($type == 'css') {
