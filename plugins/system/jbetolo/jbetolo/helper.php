@@ -2293,6 +2293,18 @@ class jbetoloFileHelper {
                                         }
                                 }
                         }
+                        else if ($type == 'js') {
+                                $js_imports[] = "";
+                                foreach ($_src_files as $src_file)
+                                        $js_imports[] = '<script type="text/javascript" src="' . $src_file . '"></script>';
+                                $js_imports[] = "";
+                                jbetoloHelper::replaceTags(
+                                        $body,
+                                        $replace_tags['js'],
+                                        "",
+                                        $indexes['js']
+                                );
+                        }
 
                         $gzip_excluded = plgSystemJBetolo::param($type . '_gzip_excluded');
                         $minify_excluded = plgSystemJBetolo::param($type . '_minify_excluded');
