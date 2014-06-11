@@ -512,27 +512,25 @@ class plgSystemJBetolo extends JPlugin {
                 }
 
                 // collect resources to be excluded from merging
-                if ($merge) {
-                        $excluded = self::param($type . '_merge_exclude');
+                $excluded = self::param($type . '_merge_exclude');
 
-                        if (isset($excluded) && $excluded) {
-                                $excluded = @explode(',', $excluded);
-                        } else {
-                                $excluded = array();
-                        }
+                if (isset($excluded) && $excluded) {
+                        $excluded = @explode(',', $excluded);
+                } else {
+                        $excluded = array();
+                }
 
-                        $excluded = array_merge($excluded, self::$predefinedExclude[$type], $excludedSrcs);
+                $excluded = array_merge($excluded, self::$predefinedExclude[$type], $excludedSrcs);
 
-                        // Gzip operates at file level, therefore if a file is indicated to be non-gzipped
-                        // and gzipping of merged file is enabled then we need to exclude it
-                        // (the analogus doesn't apply for minify as merged file can contain a mix of
-                        //  minified and non-minified code)
-                        $abs_excl = self::param('gzip_exclude');
+                // Gzip operates at file level, therefore if a file is indicated to be non-gzipped
+                // and gzipping of merged file is enabled then we need to exclude it
+                // (the analogus doesn't apply for minify as merged file can contain a mix of
+                //  minified and non-minified code)
+                $abs_excl = self::param('gzip_exclude');
 
-                        if ($abs_excl && $gzip) {
-                                $abs_excl = explode(',', $abs_excl);
-                                $excluded = array_merge($excluded, $abs_excl);
-                        }
+                if ($abs_excl && $gzip) {
+                        $abs_excl = explode(',', $abs_excl);
+                        $excluded = array_merge($excluded, $abs_excl);
                 }
 
                 // find all resources
@@ -582,7 +580,7 @@ class plgSystemJBetolo extends JPlugin {
                                 if ($merge) {
                                         $shouldIgnore = jbetoloFileHelper::isFileExcluded($src, $excluded);
                                 } else {
-                                        $shouldIgnore = type == 'css' || self::param('js_placement') == 1;
+                                        $shouldIgnore = type == 'css' || self::param('js_placement') == 1 || jbetoloFileHelper::isFileExcluded($src, $excluded);
                                 }
 
                                 if ($type == 'css') {
